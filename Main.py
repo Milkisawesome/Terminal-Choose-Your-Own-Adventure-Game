@@ -4,7 +4,7 @@ import story
 
 
 ##Typewriter Effect
-def text_speed(text,delay=0.15):
+def text_speed(text,delay=0.05):
     for char in text:
         sys.stdout.write(char)
         sys.stdout.flush()
@@ -14,7 +14,7 @@ def text_speed(text,delay=0.15):
 ##Gets choices and validates the users input
 def get_choice(options):
         while True:
-            choice = input("\nWhat do you want to do").strip().upper()
+            choice = input("\nWhat do you want to do: ").strip().upper()
             if choice in options:
                 return choice
             print("Invalid choice. Please try again.")
@@ -36,7 +36,9 @@ def game_menu():
 def start_game():
    text_speed('''\nYou wake to the clatter of wheels
 
-The car is empty, the windows black with a night that has no stars in it. A brass plate by the door reads CAR NO. 4. You don't remember boarding. You don't remember why you're afraid to ask why.
+The car is empty, the windows black with a night that has no stars in it. 
+A brass plate by the door reads CAR NO. 4. You don't remember boarding. 
+You don't remember why you're afraid to ask why.
 
 Two aisles lead away from you: one toward the front of the train, where a lantern swings behind frosted glass, and one toward the back, where the corridor narrows into shadow''')
    text_speed("[A] Head Towards the lantern, at the front")
