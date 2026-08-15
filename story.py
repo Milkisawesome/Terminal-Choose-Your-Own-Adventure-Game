@@ -33,13 +33,13 @@ The face is turned half away, but you know, with the sick certainty of dreams, t
 The lantern is warm in your hand, as if it had been waiting.""")
 
     Main.text_Speed("[A] Take the lantern to the engine room")
-    Main.text_speed("[B] Put the stuff down and head to the cargo door instead")
+    Main.text_speed("[B] Put the stuff down and head to the cargo hold")
 
     choice = Main.get_choice(['A', 'B'])
     if choice == 'A':
         end_conductor()
     else:
-        door_cargo()
+        cargo_hold()
 
 
 def door_cargo():
@@ -49,10 +49,14 @@ def door_cargo():
     It doesn't feel like anything is an emergency about this at all — except that it is the only door on this train that leads somewhere you haven't already been.
     """)
     Main.text_speed("[A] Pull the lever")
-    Main.text_speed("[B] Reconsider and go check out the chest")
+    Main.text_speed("[B] Reconsider and go check to the cargo hold")
 
     choice = Main.get_choice(['A', 'B'])
     if choice == 'A':
+        end_rails()
+    else:
+        cargo_hold()
+
 
 
 #---------------------------------------------------------------------------
@@ -74,9 +78,56 @@ You light the lantern. You take the long coat off its hook.""")
         sys.exit()
 
 def end_loop():
+    Main.text_speed("""
+    Nothing happens, which is worse than anything happening
+
+The train doesn't stop. The window doesn't lighten.
+Somewhere behind you — or maybe ahead of you — a door you don't remember opens onto Car No. 4, empty, waiting, the same brass plate on the wall.
+    """)
+
+    Main.text_speed("[A] Restart")
+    Main.text_speed("[B] Quit")
+
+    choice = Main.get_choice(['A', 'B'])
+    if choice == 'A':
+        Main.start_game()
+    else:
+        sys.exit()
 
 
 def end_rails():
+    Main.text_speed("""
+     The whole train screams
 
+The lever comes down harder than you expect, and the whole train screams — metal, brakes, the sound of a decision being made whether it wants to be or not. 
+When it finally stops, the black windows have gone green with morning, and the door hangs open on a field you don't recognize, in a country you can't name.
+
+It isn't the platform you were promised. It's better, or it's worse — but it's yours to walk into.
+    """)
+
+    Main.text_speed("[A] Restart")
+    Main.text_speed("[B] Quit")
+
+    choice = Main.get_choice(['A', 'B'])
+    if choice == 'A':
+        Main.start_game()
+    else:
+        sys.exit()
 
 def end_stop():
+    Main.text_speed("""The truth costs you nothing you didn't already owe
+
+The conductor's mouth — you can see it now, beneath the brim — curls into something almost kind. 
+He punches the ticket once, hands it back, and the far doors of the dining car slide open onto a platform lit gold with ordinary morning.
+
+You don't look back at the train. You've heard that's how you stay gotten-off.
+    """)
+
+    Main.text_speed("[A] Restart")
+    Main.text_speed("[B] Quit")
+
+    choice = Main.get_choice(['A', 'B'])
+    if choice == 'A':
+        Main.start_game()
+    else:
+        sys.exit()
