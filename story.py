@@ -21,7 +21,24 @@ Curiosity, or something like it, pulls at you from both directions.""")
 
 
 def dining_car():
-    Main.text_speed("")
+    Main.text_speed("""
+    The dining car is set for a meal no one is eating. At the far table sits a conductor in a coat too long for him, his face lost beneath the brim of his cap. He slides a blank ticket across the table and taps it once.
+
+"Where were you going," he says, "before you got on my train?"
+
+You feel the true answer rise in your throat — and, right behind it, a much easier lie.
+""")
+
+    Main.text_speed("[A] Tell him the truth")
+    Main.text_speed("[B] Make something up")
+
+    choice = Main.get_choice(['A', 'B'])
+    if choice == 'A':
+        end_stop()
+    else:
+        diningcar_lie()
+
+
 ##--------------------------------------------------------------------
 ##Cargo Hold choices
 
@@ -32,7 +49,7 @@ The face is turned half away, but you know, with the sick certainty of dreams, t
 
 The lantern is warm in your hand, as if it had been waiting.""")
 
-    Main.text_Speed("[A] Take the lantern to the engine room")
+    Main.text_speed("[A] Take the lantern to the engine room")
     Main.text_speed("[B] Put the stuff down and head to the cargo hold")
 
     choice = Main.get_choice(['A', 'B'])
@@ -56,6 +73,25 @@ def door_cargo():
         end_rails()
     else:
         cargo_hold()
+
+##-----------------------------------------------------------------------------------
+##dining car scenario
+
+def diningcar_lie():
+    Main.text_speed("""The lie leaves your mouth and the train answers it.
+     The lanterns gutter. The floor tilts, just slightly, like something underneath has shrugged. 
+     The conductor doesn't move, doesn't blink — just watches you with the patience of a man who has heard ten thousand lies exactly like yours.
+    
+You could run for the back of the train while the lights are still low, or stay very still and wait for whatever happens next.""")
+
+    Main.text_speed("[A] Run for the back of the train")
+    Main.text_speed("[B] Stay still and wait")
+
+    choice = Main.get_choice(['A', 'B'])
+    if choice == 'A':
+        cargo_hold()
+    else:
+        end_loop()
 
 
 
