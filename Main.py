@@ -1,13 +1,48 @@
 import sys
 import time
+import numpy as np
 import story
 
+##Sound Setup
+
+##Ensures app runs with or without sound
+try:
+    import pygame
+    pygame.mixer.init()
+    SOUND_ENABLED = True
+except Exception as e:
+    SOUND_ENABLED = False
+
+def make_click_sound():
+    sample_rate = 44100
+    duration = 0.03 #30ms is short so to not overlapt at high typing speed
+    frequency = 900
+
+    t = np.linspace(0,duration,int(duration*sample_rate), False)
+    wave = np.sin(frequency * t * 2 * np.pi)
+    envelope = np.exp(-t * 45)
+    wave = envelope * wave
+
+    audio = (wave * 32767).astype(np.int16)
+    stereo = np.column_stack((audio, audio))
+    return pygame.sndarray.make_sound(stereo)
+
+click_sound = make_click_sound() if SOUND_ENABLED else None
+
+##Plays typewriter click sound effect once per character
+def play_key_sound():
+    if SOUND_ENABLED and click_sound is not None:
+        try: click_sound.play()
+        except Exception:
+            pass
 
 ##Typewriter Effect
 def text_speed(text,delay=0.05):
     for char in text:
         sys.stdout.write(char)
         sys.stdout.flush()
+        if not char.isspace():
+            play_key_sound()
         time.sleep(delay)
     print()
 
@@ -52,5 +87,5 @@ Two aisles lead away from you: one toward the front of the train, where a lanter
 
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     game_menu()
