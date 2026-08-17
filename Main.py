@@ -1,19 +1,29 @@
 import sys
 import time
-import numpy as np
 import story
+
+##Ensures app runs with or without numpy installed
+try:
+    import numpy as np
+
+    NUMPY_ENABLED = True
+except ImportError:
+    NUMPY_ENABLED = False
 
 ##Checking if running on Windows
 try:
     import msvcrt
+
     IS_WINDOWS = True
     CAN_SKIP = True
 except ImportError:
     import select
     import termios
     import tty
+
     IS_WINDOWS = False
     CAN_SKIP = sys.stdin.isatty()  # only usable if we have a real terminal
+
 
 ##Space Bar press skips text
 def space_pressed():
@@ -34,11 +44,15 @@ def space_pressed():
 
 ##Ensures app runs with or without sound
 try:
+    if not NUMPY_ENABLED:
+        raise ImportError("numpy is required for sound but isn't installed")
     import pygame
+
     pygame.mixer.init()
     SOUND_ENABLED = True
 except Exception as e:
     SOUND_ENABLED = False
+
 
 def make_click_sound():
     sample_rate = 44100
@@ -54,7 +68,9 @@ def make_click_sound():
     stereo = np.column_stack((audio, audio))
     return pygame.sndarray.make_sound(stereo)
 
+
 click_sound = make_click_sound() if SOUND_ENABLED else None
+
 
 ##Plays typewriter click sound effect once per character
 def play_key_sound():
@@ -63,6 +79,7 @@ def play_key_sound():
             click_sound.play()
         except Exception:
             pass
+
 
 ##Typewriter Effect
 def text_speed(text, delay=0.05):
@@ -92,13 +109,15 @@ def text_speed(text, delay=0.05):
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
     print()
+
+
 ##Gets choices and validates the users input
 def get_choice(options):
-        while True:
-            choice = input("\nWhat do you want to do: ").strip().upper()
-            if choice in options:
-                return choice
-            print("Invalid choice. Please try again.")
+    while True:
+        choice = input("\nWhat do you want to do: ").strip().upper()
+        if choice in options:
+            return choice
+        print("Invalid choice. Please try again.")
 
 
 def game_menu():
@@ -118,22 +137,21 @@ Press the Spacebar in order to skip the text.""")
 
 
 def start_game():
-   text_speed('''\nYou wake to the clatter of wheels
+    text_speed('''\nYou wake to the clatter of wheels
 
 The car is empty, the windows black with a night that has no stars in it. 
 A brass plate by the door reads CAR NO. 4. You don't remember boarding. 
 You don't remember why you're afraid to ask why.
 
 Two aisles lead away from you: one toward the front of the train, where a lantern swings behind frosted glass, and one toward the back, where the corridor narrows into shadow''')
-   text_speed("[A] Head Towards the lantern, at the front")
-   text_speed("[B] Head into the shadow, at the back")
+    text_speed("[A] Head Towards the lantern, at the front")
+    text_speed("[B] Head into the shadow, at the back")
 
-   choice = get_choice(['A', 'B'])
-   if choice == 'A':
-       story.dining_car()
-   elif choice == 'B':
-       story.cargo_hold()
-
+    choice = get_choice(['A', 'B'])
+    if choice == 'A':
+        story.dining_car()
+    elif choice == 'B':
+        story.cargo_hold()
 
 
 if __name__ == '__main__':
